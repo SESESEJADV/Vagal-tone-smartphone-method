@@ -139,7 +139,9 @@ def calcular_rr(path_latidos, carpeta_salida):
         f.write("PAR DE LATIDOS | TIEMPO INICIO (s) | TIEMPO FIN (s) | INTERVALO R-R (s)\n")
         for i in range(1, len(tiempos)):
             ini, fin = tiempos[i - 1], tiempos[i]
-            f.write(f"{i}-{i+1:<11} | {ini:.3f}             | {fin:.3f}          | {fin - ini:.3f}\n")
+            rr = fin - ini
+            if rr < 1.0:  # 🔴 Filtrar intervalos mayores o iguales a 1 segundo
+                f.write(f"{i}-{i+1:<11} | {ini:.3f}             | {fin:.3f}          | {rr:.3f}\n")
     return ruta_salida
 
 # ===============================
